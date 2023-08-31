@@ -27,7 +27,6 @@ public class GitHubBranch {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class GitHubCommit {
     private String sha;
-    private String url;
 
     public String getSha() {
         return sha;
@@ -35,13 +34,5 @@ class GitHubCommit {
 
     public void setSha(String sha) {
         this.sha = sha;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }
