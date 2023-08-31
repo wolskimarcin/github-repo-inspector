@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,12 +29,10 @@ public class GitHubRepoController {
             // Handle JSON response
             List<GitHubRepo> repos = repoService.listRepos(username);
 
-            // TODO: Get branches info.
-            List<String> response = new ArrayList<>();
             for (GitHubRepo repo : repos) {
-                response.add("%s\n%s\n".formatted(repo.getName(), repo.getOwner().getLogin()));
+                repo.setBranches(List.of(repoService.listBranches(repo.getUrl())));
             }
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(repos);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
                     .body("Unsupported 'Accept' header");

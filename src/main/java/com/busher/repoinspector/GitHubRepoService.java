@@ -58,4 +58,35 @@ public class GitHubRepoService {
         }
         return filteredRepos;
     }
+
+    public GitHubBranch[] listBranches(String url) {
+        // Create headers with Accept: application/json
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(githubApiToken);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        // Make a GET request to GitHub API to retrieve repo's branches
+        ResponseEntity<GitHubBranch[]> response;
+        try {
+            response = restTemplate.exchange(
+                    url + "/branches",
+                    HttpMethod.GET,
+                    entity,
+                    GitHubBranch[].class
+            );
+        } catch (HttpClientErrorException.NotFound e) {
+            // Handle the case where the branch doesn't exist
+            //throw new BranchNotFoundException("Branch not found.");
+            throw new RuntimeException("Branch not found.");
+        }
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            GitHubBranch[] branches = response.getBody();
+            return branches;
+        } else {
+            throw new GitHubApiException("Failed to fetch GitHub branches.");
+        }
+
+    }
 }

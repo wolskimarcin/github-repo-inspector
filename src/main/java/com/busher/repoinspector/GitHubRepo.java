@@ -15,6 +15,7 @@ public class GitHubRepo {
     private String html_url;
     private boolean fork;
     private List<GitHubBranch> branches;
+    private String url;
 
     public long getId() {
         return id;
@@ -99,6 +100,14 @@ public class GitHubRepo {
 
     public void setBranches(List<GitHubBranch> branches) {
         this.branches = branches;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
 
