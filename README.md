@@ -30,7 +30,7 @@ API service that allows you to inspect and analyze GitHub repositories.
     ```json
     {
         "status": 406,
-        "message": "Not Acceptable. Please use 'Accept: application/json'."
+        "message": "XML format not supported"
     }
     ```
 
