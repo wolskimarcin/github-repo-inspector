@@ -1,4 +1,4 @@
-package com.busher.repoinspector;
+package com.busher.repoinspector.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

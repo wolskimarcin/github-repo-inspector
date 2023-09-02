@@ -1,4 +1,4 @@
-package com.busher.repoinspector;
+package com.busher.repoinspector.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

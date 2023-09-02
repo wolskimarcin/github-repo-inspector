@@ -1,5 +1,10 @@
-package com.busher.repoinspector;
+package com.busher.repoinspector.controller;
 
+import com.busher.repoinspector.exception.NotAcceptableException;
+import com.busher.repoinspector.exception.UnsupportedAcceptHeaderException;
+import com.busher.repoinspector.exception.UserNotFoundException;
+import com.busher.repoinspector.model.GitHubRepo;
+import com.busher.repoinspector.service.GitHubRepoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

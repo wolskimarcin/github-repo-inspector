@@ -1,4 +1,4 @@
-package com.busher.repoinspector;
+package com.busher.repoinspector.exception;
 
 public class NotAcceptableException extends RuntimeException {
     public NotAcceptableException(String message) {
