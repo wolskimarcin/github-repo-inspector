@@ -1,6 +1,5 @@
 package com.busher.repoinspector;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,20 +22,22 @@ public class GitHubRepoController {
             @RequestHeader(name = "Accept", defaultValue = "application/json") String acceptHeader
     ) {
         if ("application/xml".equals(acceptHeader)) {
-            // Handle XML response
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                    .body("XML format not supported");
+            throw new NotAcceptableException("XML format not supported");
         } else if ("application/json".equals(acceptHeader)) {
-            // Handle JSON response
-            List<GitHubRepo> repos = repoService.listRepos(username);
+            try {
+                List<GitHubRepo> repos = repoService.listRepos(username);
 
-            for (GitHubRepo repo : repos) {
-                repo.setBranches(List.of(repoService.listBranches(repo.getUrl())));
+                for (GitHubRepo repo : repos) {
+                    repo.setBranches(List.of(repoService.listBranches(repo.getUrl())));
+                }
+                return ResponseEntity.ok(repos);
+            } catch (UserNotFoundException e) {
+                throw new UserNotFoundException("User not found.");
+            } catch (Exception e) {
+                throw new RuntimeException("Internal Server Error");
             }
-            return ResponseEntity.ok(repos);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                    .body("Unsupported 'Accept' header");
+            throw new UnsupportedAcceptHeaderException("Unsupported 'Accept' header");
         }
     }
 }
