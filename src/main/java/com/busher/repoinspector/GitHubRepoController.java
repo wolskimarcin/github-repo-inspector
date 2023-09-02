@@ -1,6 +1,5 @@
 package com.busher.repoinspector;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +11,11 @@ import java.util.List;
 
 @RestController
 public class GitHubRepoController {
+    private final GitHubRepoService repoService;
 
-    @Autowired
-    private GitHubRepoService repoService;
+    public GitHubRepoController(GitHubRepoService repoService) {
+        this.repoService = repoService;
+    }
 
     @GetMapping("/repos/{username}")
     public ResponseEntity<?> listRepos(
