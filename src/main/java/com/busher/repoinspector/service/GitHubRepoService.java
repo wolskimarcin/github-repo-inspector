@@ -4,7 +4,6 @@ import com.busher.repoinspector.exception.GitHubApiException;
 import com.busher.repoinspector.exception.UserNotFoundException;
 import com.busher.repoinspector.model.GitHubBranch;
 import com.busher.repoinspector.model.GitHubRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,13 @@ import java.util.List;
 public class GitHubRepoService {
 
     private static final String GITHUB_API_URL = "https://api.github.com/users/";
-
+    private final RestTemplate restTemplate;
     @Value("${github.api.token}")
     private String githubApiToken;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    public GitHubRepoService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public List<GitHubRepo> listRepos(String username) {
         HttpHeaders headers = createHeadersWithToken();
